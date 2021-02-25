@@ -1,6 +1,8 @@
 import * as fs from 'fs';
 import * as https from 'https';
 import axios from 'axios';
+import { ClassQualityAnalysisDTO } from './dtos/class-quality-analysis-dto';
+
 const http = axios.create({
     baseURL: 'https://localhost:44325/api/',
     httpsAgent: new https.Agent({
@@ -9,12 +11,13 @@ const http = axios.create({
 });
 
 export class PlatformConnection {
-    public getClassQualityAnalysis(classFilePath: string) {
+    public getClassQualityAnalysis(classFilePath: string): Promise<ClassQualityAnalysisDTO> {
         let normalizedPath = this.normalizeFilePath(classFilePath);
 
         return new Promise((resolve, reject) => {
             this.loadCode(normalizedPath)
             .then(this.sendCode)
+            .then(this.mapDTO)
             .then(resolve)
             .catch(reject);
         });
@@ -28,8 +31,8 @@ export class PlatformConnection {
     private loadCode(filePath: string) {
         return new Promise((resolve, reject) => {
             fs.promises.readFile(filePath)
-                .then(sourceCode => resolve(sourceCode))
-                .catch(err => reject(err));
+                .then(resolve)
+                .catch(reject);
         });
     }
 
@@ -43,5 +46,9 @@ export class PlatformConnection {
                 })
                 .catch(reject);
         });
+    }
+
+    mapDTO(json: any) {
+        return new ClassQualityAnalysisDTO(json);
     }
 }
