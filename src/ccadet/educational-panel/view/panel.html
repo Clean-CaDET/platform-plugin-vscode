@@ -11,18 +11,6 @@
     <p id="title">Will change soon</p>
     <img id="image" src=""/>
 
-    <script>
-        window.addEventListener('message', event => {
-            const results = event.data;
-            let a = document;
-
-            const title = document.getElementById('title');
-            const image = document.getElementById('image');
-
-            document.getElementById('full-name').textContent = results.metrics.fullName;
-            //title.textContent = results.content.title;
-            //image.src = results.content.image;
-        });
-    </script>
+    <script src="{{scriptPath}}"></script>
 </body>
 </html>

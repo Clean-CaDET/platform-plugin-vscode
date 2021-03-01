@@ -1,51 +1,56 @@
 import * as vscode from 'vscode';
-import * as path from 'path';
 import * as fs from 'fs';
 import { ClassQualityAnalysisDTO } from '../platform/dtos/class-quality-analysis-dto';
 
 export class EducationalPanel {
-    private panel!: vscode.WebviewPanel;
-    private context: vscode.ExtensionContext;
+    public static instance: EducationalPanel | undefined;
+    
+    private _panel!: vscode.WebviewPanel;
+    private _basePath: vscode.Uri;
 
-    constructor(context: vscode.ExtensionContext) {
-        this.context = context;
-        this.initializeView();
-    }
 
-    private initializeView() {
-        if(!this.panel) {
-            this.panel = vscode.window.createWebviewPanel(
-                'ccadet-edu-panel',
-                'Clean CaDET Analysis Results',
-                vscode.ViewColumn.One,
-                {
-                    enableScripts: true
-                }
-            );
+    public static createOrShow(extensionUri: vscode.Uri) {
+		if (EducationalPanel.instance) {
+			EducationalPanel.instance._panel.reveal(vscode.ViewColumn.One);
+			return;
+		}
 
-            this.LoadHTML().then(html => {
-                this.panel.webview.html = html;
-            });
-        } else {
-            this.panel.reveal(vscode.ViewColumn.One)
-        }
-    }
+		// Otherwise, create a new panel.
+		const panel = vscode.window.createWebviewPanel(
+			'ccadet-edu-panel',
+            'Clean CaDET Analysis Results',
+			vscode.ViewColumn.One,
+			{
+                enableScripts: true,
+                localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'src', 'ccadet', 'educational-panel', 'view')]
+            }
+		);
 
-    private LoadHTML() {
-        const basePath = path.join(this.context.extensionPath, 'src', 'ccadet', 'educational-panel', 'view')
+		EducationalPanel.instance = new EducationalPanel(panel, extensionUri);
+	}
+
+
+    private constructor(panel: vscode.WebviewPanel, uri: vscode.Uri) {
+        this._panel = panel;
+        this._basePath = vscode.Uri.joinPath(uri, 'src', 'ccadet', 'educational-panel', 'view');
         
-        //const JSDiskPath = vscode.Uri.file(path.join(basePath, 'panel.js'));
-
-        return fs.promises.readFile(path.join(basePath, 'panel.html'))
-            .then(html => { return html.toString()});
+        this.loadHTML().then(html => this._panel.webview.html = html);
+    }
 
 
-        //const htmlDiskPath = vscode.Uri.file(path.join(basePath, 'panel.html'));
-        //this.panel?.webview.asWebviewUri(onDiskPath);
+    private loadHTML() {
+        return fs.promises.readFile(vscode.Uri.joinPath(this._basePath, 'panel.html').fsPath)
+            .then(html => {
+                const webview = this._panel.webview;
+        
+		        const scriptPathOnDisk = vscode.Uri.joinPath(this._basePath, 'panel.js');
+                const scriptUri = webview.asWebviewUri(scriptPathOnDisk);
+
+                return html.toString().replace("{{scriptPath}}", scriptUri.toString());
+            });
     }
 
     public showQualityAnalysisResults(qualityAnalysisResults: ClassQualityAnalysisDTO) {
-        this.initializeView();
-        this.panel.webview.postMessage({analysisResults: qualityAnalysisResults});
+        this._panel.webview.postMessage({analysisResults: qualityAnalysisResults});
     }
 }

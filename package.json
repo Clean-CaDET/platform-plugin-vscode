@@ -10,11 +10,19 @@
 		"Other"
 	],
 	"activationEvents": [
-		"onCommand:clean-cadet.analysis"
+		"onCommand:clean-cadet.start"
 	],
 	"main": "./out/extension.js",
 	"contributes": {
 		"commands": [
+			{
+				"command": "clean-cadet.start",
+				"title": "CCaDET Start",
+				"icon":{
+					"light": "./src/assets/cadet.png",
+					"dark": "./src/assets/cadet.png"
+				}
+			},
 			{
 				"command": "clean-cadet.analysis",
 				"title": "CCaDET Analysis",

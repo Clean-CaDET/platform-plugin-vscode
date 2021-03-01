@@ -6,16 +6,19 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Clean CaDET is now active.');
 
 	const platformConnection = new PlatformConnection();
-	const educationalPanel = new EducationalPanel(context);
+	
+	let ccadetStart = vscode.commands.registerCommand('clean-cadet.start', () => {
+		EducationalPanel.createOrShow(context.extensionUri);
+	});
 
-	// The command has been defined in the package.json file and parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('clean-cadet.analysis', (selectedElement) => {
+	let ccadetAnalysis = vscode.commands.registerCommand('clean-cadet.analysis', (selectedElement) => {
 		platformConnection.getClassQualityAnalysis(selectedElement.path)
-			.then(response => educationalPanel.showQualityAnalysisResults(response))
+			.then(response => EducationalPanel.instance?.showQualityAnalysisResults(response))
 			.catch(console.error);
 	});
 
-	context.subscriptions.push(disposable);
+	context.subscriptions.push(ccadetStart);
+	context.subscriptions.push(ccadetAnalysis);
 }
 
 export function deactivate() {}
