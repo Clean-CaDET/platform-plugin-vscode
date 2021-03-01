@@ -4,39 +4,47 @@ import { ClassQualityAnalysisDTO } from '../platform/dtos/class-quality-analysis
 
 export class EducationalPanel {
     public static instance: EducationalPanel | undefined;
-    
     private _panel!: vscode.WebviewPanel;
     private _basePath: vscode.Uri;
 
-
+    private _disposables: vscode.Disposable[] = [];
+    
     public static createOrShow(extensionUri: vscode.Uri) {
 		if (EducationalPanel.instance) {
 			EducationalPanel.instance._panel.reveal(vscode.ViewColumn.One);
 			return;
 		}
+		EducationalPanel.instance = new EducationalPanel(extensionUri);
+	}
 
-		// Otherwise, create a new panel.
-		const panel = vscode.window.createWebviewPanel(
+
+    private constructor(uri: vscode.Uri) {
+		this._basePath = vscode.Uri.joinPath(uri, 'src', 'ccadet', 'educational-panel', 'view');
+
+		this._panel = vscode.window.createWebviewPanel(
 			'ccadet-edu-panel',
             'Clean CaDET Analysis Results',
 			vscode.ViewColumn.One,
 			{
                 enableScripts: true,
-                localResourceRoots: [vscode.Uri.joinPath(extensionUri, 'src', 'ccadet', 'educational-panel', 'view')]
+                localResourceRoots: [this._basePath]
             }
 		);
 
-		EducationalPanel.instance = new EducationalPanel(panel, extensionUri);
-	}
+        this._panel.onDidDispose(() => this.dispose(), null, this._disposables);
 
-
-    private constructor(panel: vscode.WebviewPanel, uri: vscode.Uri) {
-        this._panel = panel;
-        this._basePath = vscode.Uri.joinPath(uri, 'src', 'ccadet', 'educational-panel', 'view');
-        
         this.loadHTML().then(html => this._panel.webview.html = html);
     }
 
+    private dispose() {
+		EducationalPanel.instance = undefined;
+		this._panel.dispose();
+
+		while (this._disposables.length) {
+			const d = this._disposables.pop();
+			if (d) d.dispose();
+		}
+	}
 
     private loadHTML() {
         return fs.promises.readFile(vscode.Uri.joinPath(this._basePath, 'panel.html').fsPath)
