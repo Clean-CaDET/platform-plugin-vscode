@@ -12,7 +12,7 @@ const http = axios.create({
 });
 
 export class PlatformConnection {
-    public getChallengeAnalysis(filePath: string, challengeId: number): Promise<ClassQualityAnalysisDTO> {
+    public getChallengeAnalysis(filePath: string, challengeId: number, studentId: string | undefined): Promise<ClassQualityAnalysisDTO> {
         if(!challengeId) throw "Invalid challenge ID.";
 
         let normalizedPath = this.normalizeFilePath(filePath);

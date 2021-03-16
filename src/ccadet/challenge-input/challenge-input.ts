@@ -13,7 +13,10 @@ export async function enterChallengeId() {
 
 export async function enterStudentId() {
 	const result = await window.showInputBox({
-		placeHolder: 'Enter your student index in the format XX-123-2018'
+		placeHolder: 'Enter your student index in the format XX-123-2018',
+		validateInput: text => {
+			return !/^([a-zA-Z]{2}-[0-9]{1,3}-[0-9]{4})$/.test(text) ? 'Index must have the format XX-123-2018' : null;
+		}
 	});
 
     return result;

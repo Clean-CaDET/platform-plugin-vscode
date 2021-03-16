@@ -7,24 +7,32 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Clean CaDET is now active.');
 
 	const platformConnection = new PlatformConnection();
-	
+	let studentId: string | undefined;
+
 	let ccadetStart = vscode.commands.registerCommand('clean-cadet.start', () => {
-		EducationalPanel.createOrShow(context.extensionUri);
+		enterStudentId()
+			.then(id => studentId = id)
+			.catch(console.error);
 	});
 
 	let ccadetAnalysis = vscode.commands.registerCommand('clean-cadet.analysis', (selectedElement) => {
 		platformConnection.getQualityAnalysis(selectedElement.path)
-			.then(response => EducationalPanel.instance?.showQualityAnalysisResults(response))
+			.then(response => {
+				EducationalPanel.createOrShow(context.extensionUri);
+				EducationalPanel.instance?.showQualityAnalysisResults(response);
+			})
 			.catch(console.error);
 	});
-	//TODO: Student id
+
 	let ccadetChallenge = vscode.commands.registerCommand('clean-cadet.challenge', (selectedElement) => {
+		if(!studentId) {
+			vscode.window.showErrorMessage("Student index is required. Enter it through Ctrl+Shift+P > Clean CaDET Start");
+			return;
+		}
 		enterChallengeId()
-		    .then(challenge => {
-				platformConnection.getChallengeAnalysis(selectedElement.path, challenge)
-					.then(response => EducationalPanel.instance?.showQualityAnalysisResults(response))
-					.catch(console.error);
-			});
+		    .then(challenge => platformConnection.getChallengeAnalysis(selectedElement.path, challenge, studentId)
+			.then(response => EducationalPanel.instance?.showQualityAnalysisResults(response))
+			.catch(console.error));
 	});
 
 	context.subscriptions.push(ccadetStart);
