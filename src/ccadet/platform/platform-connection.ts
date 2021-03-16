@@ -12,8 +12,22 @@ const http = axios.create({
 });
 
 export class PlatformConnection {
-    public getClassQualityAnalysis(classFilePath: string): Promise<ClassQualityAnalysisDTO> {
-        let normalizedPath = this.normalizeFilePath(classFilePath);
+    public getChallengeAnalysis(filePath: string, challengeId: number): Promise<ClassQualityAnalysisDTO> {
+        if(!challengeId) throw "Invalid challenge ID.";
+
+        let normalizedPath = this.normalizeFilePath(filePath);
+        //TODO: Endpoint for sending challenge code.
+        return new Promise((resolve, reject) => {
+            this.loadCode(normalizedPath)
+            .then(this.sendCode)
+            .then(this.mapDTO)
+            .then(resolve)
+            .catch(reject);
+        });
+    }
+
+    public getQualityAnalysis(filePath: string): Promise<ClassQualityAnalysisDTO> {
+        let normalizedPath = this.normalizeFilePath(filePath);
 
         return new Promise((resolve, reject) => {
             this.loadCode(normalizedPath)
