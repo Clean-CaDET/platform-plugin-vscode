@@ -17,25 +17,17 @@
 		"commands": [
 			{
 				"command": "clean-cadet.start",
-				"title": "CCaDET Start",
-				"icon":{
-					"light": "./src/assets/cadet.png",
-					"dark": "./src/assets/cadet.png"
-				}
+				"title": "CCaDET Start"
 			},
 			{
 				"command": "clean-cadet.analysis",
-				"title": "CCaDET Analysis",
-				"icon":{
-					"light": "./src/assets/cadet.png",
-					"dark": "./src/assets/cadet.png"
-				}
+				"title": "CCaDET Analysis"
 			}
 		],
 		"menus": {
 			"explorer/context": [
 				{
-					"when": "resourceLangId == csharp",
+					"when": "resourceLangId == csharp || explorerResourceIsFolder",
 					"command": "clean-cadet.analysis",
 					"group": "2_workspace"
 				}
