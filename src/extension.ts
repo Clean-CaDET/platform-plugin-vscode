@@ -26,7 +26,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let ccadetChallenge = vscode.commands.registerCommand('clean-cadet.challenge', (selectedElement) => {
 		if(!studentId) {
-			vscode.window.showErrorMessage("Student index is required. Enter it through Ctrl+Shift+P > Clean CaDET Start");
+			vscode.window.showErrorMessage("Student index is required. Enter it through Ctrl+Shift+P > CCaDET Start");
 			return;
 		}
 		enterChallengeId()
