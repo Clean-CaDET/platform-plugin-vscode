@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import { ClassQualityAnalysisDTO } from '../platform/dtos/class-quality-analysis-dto';
+import { ClassQualityAnalysisDTO } from '../platform-connection/dtos/class-quality-analysis-dto';
 
 export class EducationalPanel {
     public static instance: EducationalPanel | undefined;

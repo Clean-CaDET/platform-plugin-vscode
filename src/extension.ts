@@ -1,5 +1,5 @@
 import * as vscode from 'vscode';
-import { PlatformConnection } from './ccadet/platform/platform-connection';
+import { PlatformConnection } from './ccadet/platform-connection/platform-connection';
 import { EducationalPanel } from './ccadet/educational-panel/educational-panel';
 import { enterChallengeId, enterStudentId } from './ccadet/challenge-input/challenge-input';
 
@@ -30,8 +30,8 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		enterChallengeId()
-		    .then(challenge => platformConnection.getChallengeAnalysis(selectedElement.path, challenge, studentId)
-			.then(response => EducationalPanel.instance?.showQualityAnalysisResults(response))
+		    .then(challenge => platformConnection.getChallengeAnalysis(selectedElement.path, challenge, studentId || "")
+			.then(response => vscode.window.showInformationMessage("Challenge result: " + response.responseText))
 			.catch(console.error));
 	});
 
