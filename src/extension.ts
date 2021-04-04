@@ -4,6 +4,7 @@ import { EducationalPanel } from './ccadet/educational-panel/educational-panel';
 import { enterChallengeId, enterStudentId } from './ccadet/challenge-input/challenge-input';
 
 export function activate(context: vscode.ExtensionContext) {
+	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; //TODO: DANGEROUS AND SHOULD BE REMOVED AFTER TEST RUN
 	console.log('Clean CaDET is now active.');
 
 	const platformConnection = new PlatformConnection();
