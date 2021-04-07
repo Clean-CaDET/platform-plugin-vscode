@@ -26,7 +26,8 @@ export class EducationalPanel {
 			vscode.ViewColumn.One,
 			{
                 enableScripts: true,
-                localResourceRoots: [this._basePath]
+                localResourceRoots: [this._basePath],
+                retainContextWhenHidden: true
             }
 		);
 

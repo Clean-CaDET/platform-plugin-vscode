@@ -50,10 +50,12 @@
             }
             if(learningObject.typeDiscriminator === 'image') {
                 var image = '<img src="' + learningObject.url + '">';
-                image += '<small>' + learningObject.caption + '</small>';
+                image += '<small>(<a href="' + learningObject.url + '">open image in browser)</a>) ' + learningObject.caption + '</small>';
                 return image;
             }
-            
+            if(learningObject.typeDiscriminator === 'video') {
+                return '<a href="' + learningObject.url + '">Check out this video for additional guidance.</a>'
+            }
             return "";
         }
     });
