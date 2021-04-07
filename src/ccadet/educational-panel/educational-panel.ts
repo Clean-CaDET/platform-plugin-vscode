@@ -1,6 +1,6 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
-import { ClassQualityAnalysisDTO } from '../platform-connection/dtos/class-quality-analysis-dto';
+import { ChallengeEvaluation } from '../platform-connection/view-model/challenge-evaluation';
 
 export class EducationalPanel {
     public static instance: EducationalPanel | undefined;
@@ -17,13 +17,12 @@ export class EducationalPanel {
 		EducationalPanel.instance = new EducationalPanel(extensionUri);
 	}
 
-
     private constructor(uri: vscode.Uri) {
 		this._basePath = vscode.Uri.joinPath(uri, 'src', 'ccadet', 'educational-panel', 'view');
 
 		this._panel = vscode.window.createWebviewPanel(
 			'ccadet-edu-panel',
-            'Clean CaDET Analysis Results',
+            'Challenge Analysis Results',
 			vscode.ViewColumn.One,
 			{
                 enableScripts: true,
@@ -58,7 +57,7 @@ export class EducationalPanel {
             });
     }
 
-    public showQualityAnalysisResults(qualityAnalysisResults: ClassQualityAnalysisDTO) {
-        this._panel.webview.postMessage({analysisResults: qualityAnalysisResults});
+    public showChallengeAnalysisResults(analysisResults: ChallengeEvaluation) {
+        this._panel.webview.postMessage({analysisResults: analysisResults});
     }
 }

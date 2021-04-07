@@ -16,15 +16,6 @@ export function activate(context: vscode.ExtensionContext) {
 			.catch(console.error);
 	});
 
-	let ccadetAnalysis = vscode.commands.registerCommand('clean-cadet.analysis', (selectedElement) => {
-		platformConnection.getQualityAnalysis(selectedElement.path)
-			.then(response => {
-				EducationalPanel.createOrShow(context.extensionUri);
-				EducationalPanel.instance?.showQualityAnalysisResults(response);
-			})
-			.catch(console.error);
-	});
-
 	let ccadetChallenge = vscode.commands.registerCommand('clean-cadet.challenge', (selectedElement) => {
 		if(!studentId) {
 			vscode.window.showErrorMessage("Student index is required. Enter it through Ctrl+Shift+P > CCaDET Start");
@@ -32,12 +23,14 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		enterChallengeId()
 		    .then(challenge => platformConnection.getChallengeAnalysis(selectedElement.path, challenge, studentId || "")
-			.then(response => vscode.window.showInformationMessage("Challenge result: " + response.responseText))
+			.then(response => {
+				EducationalPanel.createOrShow(context.extensionUri);
+				EducationalPanel.instance?.showChallengeAnalysisResults(response);
+			})
 			.catch(console.error));
 	});
 
 	context.subscriptions.push(ccadetStart);
-	context.subscriptions.push(ccadetAnalysis);
 	context.subscriptions.push(ccadetChallenge);
 }
 

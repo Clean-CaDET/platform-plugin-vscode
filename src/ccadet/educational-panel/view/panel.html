@@ -3,14 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Content-Security-Policy" content="default-src self; img-src vscode-resource:; script-src vscode-resource: 'self' 'unsafe-inline'; style-src vscode-resource: 'self' 'unsafe-inline'; "/>
-    <title>Cat Coding</title>
+    <meta http-equiv="Content-Security-Policy" content="default-src self; img-src https://i.ibb.co/ vscode-resource:; script-src vscode-resource: 'self' 'unsafe-inline'; style-src vscode-resource: 'self' 'unsafe-inline'; media-src https://youtu.be/ https://www.youtube.com/;"/>
+    <title>Challenge Analysis Results</title>
 </head>
 <body>
-    <h2 id="full-name">Needs to change 2</h2>
-    <p id="title">Will change soon</p>
-    <img id="image" src=""/>
+    <h3 id="results"></h3>
+    <p>Challenge id: <span id="challenge-id"></span></p>
+    <p>
+        <span id="hint-num"></span>
+        <button id="show-hints" onclick="showHints()">Show Hints</button>
+    </p>
+
+    <div id="hint-panel" style="display:none">
+        <hr></hr>
+        <div id="hints"></div>
+    </div>
+
 
     <script src="{{scriptPath}}"></script>
+    <script>
+        function showHints() {
+            document.getElementById('hint-panel').style.display = 'block';
+            document.getElementById('show-hints').style.display = 'none';
+        }
+    </script>
 </body>
 </html>

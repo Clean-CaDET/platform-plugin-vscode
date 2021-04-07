@@ -20,21 +20,12 @@
 				"title": "CCaDET Start"
 			},
 			{
-				"command": "clean-cadet.analysis",
-				"title": "CCaDET Analysis"
-			},
-			{
 				"command": "clean-cadet.challenge",
 				"title": "CCaDET Challenge"
 			}
 		],
 		"menus": {
 			"explorer/context": [
-				{
-					"when": "resourceLangId == csharp || explorerResourceIsFolder",
-					"command": "clean-cadet.analysis",
-					"group": "2_workspace"
-				},
 				{
 					"when": "resourceLangId == csharp || explorerResourceIsFolder",
 					"command": "clean-cadet.challenge",
