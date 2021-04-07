@@ -1,70 +1,29 @@
-# clean-cadet README
+# Clean CaDET README
 
-This is the README for your extension "clean-cadet". After writing up a brief description, we recommend including the following sections.
+The vision and idea behind Clean CaDET is described in this [overview video](https://www.youtube.com/watch?v=fBENFfjC49A). Clean CaDET started as a project funded by the [Science Fund of the Republic of Serbia](http://fondzanauku.gov.rs/?lang=en). It hopes to grow into an active open-source community dedicated to software engineers' growth and their pursuit to build sustainable, high-quality software.
+
+This plugin acts as a front-end for software engineers that want to learn about code quality and have their code analyzed. It is meant to interact with the back-end platform. For an overview of the platform and its composing elements, check the [wiki pages](https://github.com/Clean-CaDET/platform/wiki).
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
-
-For example if there is an image subfolder under your extension project workspace:
-
-\!\[feature X\]\(images/feature-x.png\)
-
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
+Will be setup after the test run.
 
 ## Requirements
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+This plugin is used to access educational content and send challenge solutions to the Clean CaDET platform. Users need to connect to an existing platform or setup a local instance of it.
+
+To setup the platform:
+
+- Download [the platform](https://github.com/Clean-CaDET/platform) and setup its database of initial educational content.
 
 ## Extension Settings
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
 This extension contributes the following settings:
 
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
+* `platform.tutorUrl`: Specifies the base URL for the Smart Tutor endpoints.
 
 ## Release Notes
 
-Users appreciate release notes as you update your extension.
+### 0.0.1
 
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-## Following extension guidelines
-
-Ensure that you've read through the extensions guidelines and follow the best practices for creating your extension.
-
-* [Extension Guidelines](https://code.visualstudio.com/api/references/extension-guidelines)
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+Initial release of plugin used for a controlled experiment with university students.
