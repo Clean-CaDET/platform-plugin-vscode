@@ -1,7 +1,7 @@
 {
 	"name": "clean-cadet",
 	"displayName": "Clean CaDET",
-	"description": "",
+	"description": "A plugin that interacts with the challenge system offered by the Smart Tutor module of the Clean CaDET Platform (https://github.com/Clean-CaDET/platform).",
 	"version": "0.0.1",
 	"engines": {
 		"vscode": "^1.55.0"
@@ -21,7 +21,7 @@
 			},
 			{
 				"command": "clean-cadet.challenge",
-				"title": "CCaDET Challenge"
+				"title": "CCaDET Submit Challenge"
 			}
 		],
 		"menus": {
@@ -32,7 +32,17 @@
 					"group": "2_workspace"
 				}
 			]
-		}
+		},
+		"configuration": {
+			"title": "Clean CaDET",
+			"properties": {
+			  "platform.tutorUrl": {
+				"type": "string",
+				"default": "https://localhost:44333/api/",
+				"description": "Specifies the base URL for the Smart Tutor endpoints."
+			  }
+			}
+		  }
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",

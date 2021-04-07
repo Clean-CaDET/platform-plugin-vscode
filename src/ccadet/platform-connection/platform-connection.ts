@@ -6,9 +6,9 @@ import { ChallengeEvaluation } from './view-model/challenge-evaluation';
 export class PlatformConnection {
     private httpTutor: AxiosInstance;
 
-    constructor() {
+    constructor(baseUrl: string) {
         this.httpTutor = axios.create({
-            baseURL: "https://localhost:44333/api/",
+            baseURL: baseUrl,
             httpsAgent: new https.Agent({
                 rejectUnauthorized: false
             })
