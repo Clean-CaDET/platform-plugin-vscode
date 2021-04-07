@@ -3,6 +3,7 @@
 	"displayName": "Clean CaDET",
 	"description": "A plugin that interacts with the challenge system offered by the Smart Tutor module of the Clean CaDET Platform (https://github.com/Clean-CaDET/platform).",
 	"version": "0.0.1",
+	"publisher": "Clean CaDET",
 	"engines": {
 		"vscode": "^1.55.0"
 	},
