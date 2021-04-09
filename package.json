@@ -3,7 +3,11 @@
 	"displayName": "Clean CaDET",
 	"description": "A plugin that interacts with the challenge system offered by the Smart Tutor module of the Clean CaDET Platform (https://github.com/Clean-CaDET/platform).",
 	"version": "0.0.1",
-	"publisher": "Clean CaDET",
+	"publisher": "CleanCaDET",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Clean-CaDET/platform-plugin-vscode"
+	},
 	"engines": {
 		"vscode": "^1.55.0"
 	},
@@ -37,13 +41,13 @@
 		"configuration": {
 			"title": "Clean CaDET",
 			"properties": {
-			  "platform.tutorUrl": {
-				"type": "string",
-				"default": "https://localhost:44333/api/",
-				"description": "Specifies the base URL for the Smart Tutor endpoints."
-			  }
+				"platform.tutorUrl": {
+					"type": "string",
+					"default": "https://localhost:44333/api/",
+					"description": "Specifies the base URL for the Smart Tutor endpoints."
+				}
 			}
-		  }
+		}
 	},
 	"scripts": {
 		"vscode:prepublish": "npm run compile",
@@ -58,12 +62,12 @@
 		"@types/mocha": "^8.2.2",
 		"@types/node": "^12.20.7",
 		"@types/vscode": "^1.55.0",
-		"@typescript-eslint/eslint-plugin": "^4.20.0",
-		"@typescript-eslint/parser": "^4.20.0",
+		"@typescript-eslint/eslint-plugin": "^4.21.0",
+		"@typescript-eslint/parser": "^4.21.0",
 		"eslint": "^7.23.0",
 		"glob": "^7.1.6",
 		"mocha": "^8.3.2",
-		"typescript": "^4.2.3",
+		"typescript": "^4.2.4",
 		"vscode-test": "^1.5.2"
 	},
 	"dependencies": {

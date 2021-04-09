@@ -5,11 +5,17 @@
     const hintButton = document.getElementById('show-hints');
     const hintNum = document.getElementById('hint-num');
     const hints = document.getElementById('hints');
+
+    const solutionPanel = document.getElementById('solution-panel');
+    const solutionButton = document.getElementById('show-solution');
+    const solution = document.getElementById('solution');
     
     // Handle messages sent from the extension to the webview
     window.addEventListener('message', event => {
         hintPanel.style.display = 'none';
         hintButton.style.display = 'block';
+        solutionPanel.style.display = 'none';
+        solutionButton.style.display = 'block';
         const analysisResults = event.data.analysisResults;
         
         
@@ -22,6 +28,7 @@
         hintNum.textContent = createHintNumText(analysisResults.applicableHints.length, analysisResults.challengeCompleted);
 
         hints.innerHTML = createHintContent(analysisResults.applicableHints);
+        solution.innerHTML = "<b>Solution</b>: " + createLearningObjectContent(analysisResults.solution);
 
         function createHintContent(applicableHints) {
             var hintPrint = "<div style='border-bottom: 1px solid gray'>";
@@ -54,7 +61,7 @@
                 return image;
             }
             if(learningObject.typeDiscriminator === 'video') {
-                return '<a href="' + learningObject.url + '">Check out this video for additional guidance.</a>'
+                return '<a href="' + learningObject.url + '">Check out this video for guidance.</a>'
             }
             return "";
         }

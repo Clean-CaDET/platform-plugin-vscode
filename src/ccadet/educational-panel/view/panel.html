@@ -19,12 +19,25 @@
         <div id="hints"></div>
     </div>
 
+    <p>
+        <hr></hr>
+        <button id="show-solution" onclick="showSolution()">Show Solution</button>
+    </p>
+    <div id="solution-panel" style="display:none">
+        <hr></hr>
+        <div id="solution"></div>
+    </div>
+
 
     <script src="{{scriptPath}}"></script>
     <script>
         function showHints() {
             document.getElementById('hint-panel').style.display = 'block';
             document.getElementById('show-hints').style.display = 'none';
+        }
+        function showSolution() {
+            document.getElementById('solution-panel').style.display = 'block';
+            document.getElementById('show-solution').style.display = 'none';
         }
     </script>
 </body>
