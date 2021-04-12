@@ -35,11 +35,12 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		enterChallengeId()
 		    .then(challenge => platformConnection.getChallengeAnalysis(selectedElement.path, challenge, studentId || "")
-			.then(response => {
-				EducationalPanel.createOrShow(context.extensionUri);
-				EducationalPanel.instance?.showChallengeAnalysisResults(response);
-			})
-			.catch(console.error));
+				.then(response => {
+					EducationalPanel.createOrShow(context.extensionUri);
+					EducationalPanel.instance?.showChallengeAnalysisResults(response);
+				})
+				.catch(handleBackendError))
+			.catch(vscode.window.showErrorMessage);
 	});
 
 	context.subscriptions.push(ccadetStart);
@@ -47,3 +48,17 @@ export function activate(context: vscode.ExtensionContext) {
 }
 
 export function deactivate() {}
+
+function handleBackendError(error: any): void | PromiseLike<void> {
+	switch(error.response.status) {
+		case 400:
+			vscode.window.showErrorMessage("Bad submission. Did you select the appropriate file/folder to submit?");
+			break;
+		case 404:
+			vscode.window.showErrorMessage("Challenge not found. Did you submit the correct ID (from the Tutor page)?");
+			break;
+		default:
+			console.error(error);
+	}
+}
+
