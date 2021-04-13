@@ -29,8 +29,6 @@ export class PlatformConnection {
     }
     
     private sendChallenge(sourceCode: string[], challengeId: number, traineeId: string) {
-        //TODO: Request and Response DTOs and functions for mapping
-        //TODO: As this class continues to grow (and we understand it better) look for opportunities to refactor.
         let request = JSON.stringify({
             sourceCode: sourceCode,
             challengeId: challengeId,

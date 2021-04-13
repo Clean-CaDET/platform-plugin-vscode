@@ -38,7 +38,7 @@
                 if(hint.learningObject) {
                     hintPrint += createLearningObjectContent(hint.learningObject);
                 }
-                hintPrint += "<p style='white-space: pre;'><b>Applicable to</b>:\r\n" + hint.applicableToCodeSnippets.join("\r\n");
+                hintPrint += "<p style='white-space: pre;'><b>Applicable to</b>:\\r\\n" + hint.applicableToCodeSnippets.join("\\r\\n");
                 hintPrint += "</div><br><br>";
             }
 

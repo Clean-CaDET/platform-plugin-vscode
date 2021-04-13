@@ -1,6 +1,9 @@
 import * as vscode from 'vscode';
 import * as fs from 'fs';
+import { getPanelHtml } from './view/panel-merge';
 import { ChallengeEvaluation } from '../platform-connection/view-model/challenge-evaluation';
+
+const PRODUCTION = true;
 
 export class EducationalPanel {
     public static instance: EducationalPanel | undefined;
@@ -47,6 +50,8 @@ export class EducationalPanel {
 	}
 
     private loadHTML() {
+        if(PRODUCTION) return Promise.resolve(getPanelHtml());
+        
         return fs.promises.readFile(vscode.Uri.joinPath(this._basePath, 'panel.html').fsPath)
             .then(html => {
                 const webview = this._panel.webview;

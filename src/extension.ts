@@ -7,21 +7,20 @@ export function activate(context: vscode.ExtensionContext) {
 	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; //TODO: DANGEROUS AND SHOULD BE REMOVED AFTER TEST RUN
 	console.log('Clean CaDET is now active.');
 
-	let platformConnection: PlatformConnection;
+	let platformConnection: PlatformConnection | null;
 	let studentId: string | undefined;
 
 	let ccadetStart = vscode.commands.registerCommand('clean-cadet.start', () => {
 		enterStudentId(studentId || "")
-			.then(id => studentId = id)
+			.then(id => {
+				if(!id) {
+					vscode.window.showErrorMessage("Student index is required. Enter it through Ctrl+Shift+P > CCaDET Start");
+					return;
+				}
+				studentId = id;
+				platformConnection = setupConnection();
+			})
 			.catch(console.error);
-		
-		let configuration = vscode.workspace.getConfiguration();
-		let tutorUrl = configuration.get<string>("platform.tutorUrl", "");
-		if(tutorUrl) {
-			platformConnection = new PlatformConnection(tutorUrl);
-		} else {
-			vscode.window.showErrorMessage("No URL specified in settings (platform.tutorUrl field). Define it and rerun this command.");
-		}
 	});
 
 	let ccadetChallenge = vscode.commands.registerCommand('clean-cadet.challenge', (selectedElement) => {
@@ -30,11 +29,11 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		if(!platformConnection) {
-			vscode.window.showErrorMessage("Platform connection not established. Define platform.tutorUrl in settings and run CCaDET Start.");
+			vscode.window.showErrorMessage("Define platform.tutorUrl in settings and run Ctrl+Shift+P > CCaDET Start.");
 			return;
 		}
 		enterChallengeId()
-		    .then(challenge => platformConnection.getChallengeAnalysis(selectedElement.path, challenge, studentId || "")
+		    .then(challenge => platformConnection?.getChallengeAnalysis(selectedElement.path, challenge, studentId || "")
 				.then(response => {
 					EducationalPanel.createOrShow(context.extensionUri);
 					EducationalPanel.instance?.showChallengeAnalysisResults(response);
@@ -45,6 +44,17 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.push(ccadetStart);
 	context.subscriptions.push(ccadetChallenge);
+}
+
+function setupConnection() {
+	let configuration = vscode.workspace.getConfiguration();
+	let tutorUrl = configuration.get<string>("platform.tutorUrl", "");
+	if (tutorUrl) {
+		return new PlatformConnection(tutorUrl);
+	} else {
+		vscode.window.showErrorMessage("Define platform.tutorUrl in settings and run Ctrl+Shift+P > CCaDET Start.");
+	}
+	return null;
 }
 
 export function deactivate() {}

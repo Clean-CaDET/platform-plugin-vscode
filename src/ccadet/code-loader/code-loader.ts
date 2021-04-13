@@ -29,7 +29,8 @@ export function loadCode(filePath: string): Promise<string[]> {
 }
 
 function normalizeFilePath(filePathWithPrefix: string) {
-    return filePathWithPrefix.substr(3); //dirty fix
+    if(process.platform === "win32") return filePathWithPrefix.substr(3); //dirty fix
+    return filePathWithPrefix;
 }
 
 function readCodeFromFile(filePath: string): Promise<string> {
