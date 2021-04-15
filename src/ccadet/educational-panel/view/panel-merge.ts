@@ -11,7 +11,8 @@ export function getPanelHtml() {
     <title>Challenge Analysis Results</title>
 </head>
 <body>
-    <h3 id="results"></h3>
+    <br><br>
+    <h1 id="results"></h1>
     <p>Challenge id: <span id="challenge-id"></span></p>
     <p>
         <span id="hint-num"></span>
@@ -59,8 +60,9 @@ export function getPanelHtml() {
     
             results.textContent = analysisResults.challengeCompleted ?
                 "Congratulations! You have completed the challenge." :
-                "Your submission is not yet there. Keep going to complete the challenge!"
-            
+                "Your submission is not yet there. Keep going to complete the challenge!";
+            if(analysisResults.challengeCompleted) results.style.color = 'green';
+
             hintNum.textContent = createHintNumText(analysisResults.applicableHints.length, analysisResults.challengeCompleted);
     
             hints.innerHTML = createHintContent(analysisResults.applicableHints);
