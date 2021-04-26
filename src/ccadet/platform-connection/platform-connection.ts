@@ -28,15 +28,15 @@ export class PlatformConnection {
         });
     }
     
-    private sendChallenge(sourceCode: string[], challengeId: number, traineeId: string) {
+    private sendChallenge(sourceCode: string[], challengeId: number, learnerId: string) {
         let request = JSON.stringify({
             sourceCode: sourceCode,
             challengeId: challengeId,
-            traineeId: traineeId
+            learnerId: learnerId
         });
 
         return new Promise((resolve, reject) => {
-            this.httpTutor.post("challenge/evaluate-submission", request, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
+            this.httpTutor.post("submissions/challenge", request, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
                 .then(response => {
                     resolve(response.data);
                 })
