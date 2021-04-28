@@ -2,6 +2,7 @@ import * as https from 'https';
 import axios, { AxiosInstance } from 'axios';
 import { loadCode } from '../code-loader/code-loader';
 import { ChallengeEvaluation } from './view-model/challenge-evaluation';
+import { Learner } from './view-model/learner';
 
 export class PlatformConnection {
     private httpTutor: AxiosInstance;
@@ -15,20 +16,32 @@ export class PlatformConnection {
         });
     }
 
-    public getChallengeAnalysis(filePath: string, challengeId: number, studentId: string): Promise<ChallengeEvaluation> {
-        if(!studentId) throw "Invalid student ID.";
+    public loginUser(id: string): Promise<Learner> {
+		return new Promise((resolve, reject) => {
+            this.httpTutor.post("learners/login", { studentIndex: id }, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
+                .then(this.mapLearnerDTO)
+                .then(resolve)
+                .catch(reject);
+        });
+	}
+    mapLearnerDTO(response: any) {
+        return new Learner(response.data);
+    }
+
+    public getChallengeAnalysis(filePath: string, challengeId: number, learnerId: number): Promise<ChallengeEvaluation> {
+        if(!learnerId) throw "Invalid student ID.";
         if(!challengeId) throw "Invalid challenge ID.";
 
         return new Promise((resolve, reject) => {
             loadCode(filePath)
-            .then(sourceCode => this.sendChallenge(sourceCode, challengeId, studentId))
+            .then(sourceCode => this.sendChallenge(sourceCode, challengeId, learnerId))
             .then(this.mapChallengeDTO)
             .then(resolve)
             .catch(reject);
         });
     }
     
-    private sendChallenge(sourceCode: string[], challengeId: number, learnerId: string) {
+    private sendChallenge(sourceCode: string[], challengeId: number, learnerId: number) {
         let request = JSON.stringify({
             sourceCode: sourceCode,
             challengeId: challengeId,

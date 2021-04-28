@@ -8,23 +8,33 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Clean CaDET is now active.');
 
 	let platformConnection: PlatformConnection | null;
-	let studentId: string | undefined;
+	let learnerId: number | undefined;
+	let learnerIndex: string | undefined;
 
 	let ccadetStart = vscode.commands.registerCommand('clean-cadet.start', () => {
-		enterStudentId(studentId || "")
-			.then(id => {
-				if(!id) {
+		enterStudentId(learnerIndex || "")
+			.then(index => {
+				if(!index) {
 					vscode.window.showErrorMessage("Student index is required. Enter it through Ctrl+Shift+P > CCaDET Start");
 					return;
 				}
-				studentId = id;
+				learnerIndex = index;
+
 				platformConnection = setupConnection();
+				if(platformConnection != null) {
+					platformConnection.loginUser(index)
+					  .then(learner => {
+						  learnerId = learner.id;
+						  vscode.window.showInformationMessage("Successfully logged in with index: " + learnerIndex)
+					  })
+					  .catch(handleLoginError);
+				}
 			})
 			.catch(console.error);
 	});
 
 	let ccadetChallenge = vscode.commands.registerCommand('clean-cadet.challenge', (selectedElement) => {
-		if(!studentId) {
+		if(!learnerId) {
 			vscode.window.showErrorMessage("Student index is required. Enter it through Ctrl+Shift+P > CCaDET Start");
 			return;
 		}
@@ -33,12 +43,12 @@ export function activate(context: vscode.ExtensionContext) {
 			return;
 		}
 		enterChallengeId()
-		    .then(challenge => platformConnection?.getChallengeAnalysis(selectedElement.path, challenge, studentId || "")
+		    .then(challenge => platformConnection?.getChallengeAnalysis(selectedElement.path, challenge, learnerId || 0)
 				.then(response => {
 					EducationalPanel.createOrShow(context.extensionUri);
 					EducationalPanel.instance?.showChallengeAnalysisResults(response);
 				})
-				.catch(handleBackendError))
+				.catch(handleSubmissionError))
 			.catch(vscode.window.showErrorMessage);
 	});
 
@@ -51,21 +61,30 @@ function setupConnection() {
 	let tutorUrl = configuration.get<string>("platform.tutorUrl", "");
 	if (tutorUrl) {
 		return new PlatformConnection(tutorUrl);
-	} else {
-		vscode.window.showErrorMessage("Define platform.tutorUrl in settings and run Ctrl+Shift+P > CCaDET Start.");
 	}
+	vscode.window.showErrorMessage("Define platform.tutorUrl in settings and run Ctrl+Shift+P > CCaDET Start.");
 	return null;
 }
 
 export function deactivate() {}
 
-function handleBackendError(error: any): void | PromiseLike<void> {
+function handleSubmissionError(error: any): void | PromiseLike<void> {
 	switch(error.response.status) {
 		case 400:
 			vscode.window.showErrorMessage("Bad submission. Did you select the appropriate file/folder to submit?");
 			break;
 		case 404:
 			vscode.window.showErrorMessage("Challenge not found. Did you submit the correct ID (from the Tutor page)?");
+			break;
+		default:
+			console.error(error);
+	}
+}
+
+function handleLoginError(error: any) {
+	switch(error.response.status) {
+		case 404:
+			vscode.window.showErrorMessage("Invalid student index. Ensure you are registered with the platform and your index is correct.");
 			break;
 		default:
 			console.error(error);

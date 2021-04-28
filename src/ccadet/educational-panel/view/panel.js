@@ -25,6 +25,7 @@
             "Congratulations! You have completed the challenge." :
             "Your submission is not yet there. Keep going to complete the challenge!";
         if(analysisResults.challengeCompleted) results.style.color = 'green';
+        else results.style.color = 'unset';
         
         hintNum.textContent = createHintNumText(analysisResults.applicableHints.length, analysisResults.challengeCompleted);
 
