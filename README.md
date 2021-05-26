@@ -1,12 +1,27 @@
-# Clean CaDET README
+<p align="center">
+  
+  ![Cover](https://raw.githubusercontent.com/wiki/Clean-CaDET/platform/images/overview/cover.jpg)
+  
+</p>
 
-The vision and idea behind Clean CaDET is described in this [overview video](https://www.youtube.com/watch?v=fBENFfjC49A). Clean CaDET started as a project funded by the [Science Fund of the Republic of Serbia](http://fondzanauku.gov.rs/?lang=en). It hopes to grow into an active open-source community dedicated to software engineers' growth and their pursuit to build sustainable, high-quality software.
+<h1 align="center">Clean CaDET</h1>
 
-This plugin acts as a front-end for software engineers that want to learn about code quality and have their code analyzed. It is meant to interact with the back-end platform. For an overview of the platform and its composing elements, check the [wiki pages](https://github.com/Clean-CaDET/platform/wiki).
+<p align="justify">
+  The Clean Code and Design Educational Tool (Clean CaDET) is a platform dedicated to the study of clean code. It presents a conglomerate of AI-powered tools for educators, learners, practitioners, and researchers studying clean code. The repository for the platform with which this plugin interacts can be found <a href="https://github.com/Clean-CaDET/platform" target="_blank">here</a>.
+  </p>
+<p align="justify">
+  Clean CaDET started as a project funded by the <a href="http://fondzanauku.gov.rs/?lang=en">Science Fund of the Republic of Serbia</a>. It hopes to grow into an active open-source community dedicated to software engineers' growth and their pursuit to build sustainable, high-quality software.
+</p>
 
-## Features
+<h2 align="left">Visual Studio Code Plugin</h1>
 
-Will be setup after the test run.
+<p align="justify">
+  This repository hosts the code for the Visual Studio plugin capable of interacting with the platform, enabling the following use cases:
+  <ul align="justify">
+    <li align="justify"><i>Studying clean code challenges</i>, where the learner loads a predefined C# project focused around some aspect of clean code (e.g., meaningful names, focused methods) and is tasked with refactoring the code in some way. How our platform resolves these challenge submissions is described <a href="https://github.com/Clean-CaDET/platform/wiki/Module-Smart-Tutor#challenges" target="_blank">here</a>.</li>
+    <li align="justify"><i>Analyzing a project's code quality</i>, where an engineering can submit any C# project (or some subset, such as a folder or class) to the platform for analysis. The platform detects code issues using AI detectors, and selects appropriate learning objects to display to the engineer and help them resolve the identified issues. This data flow is described in more detail <a href="https://github.com/Clean-CaDET/platform/wiki" target="_blank">here</a>.</li>
+  </ul>
+</p>
 
 ## Requirements
 
