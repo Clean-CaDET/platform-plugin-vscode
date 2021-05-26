@@ -9,9 +9,6 @@
 <p align="justify">
   The Clean Code and Design Educational Tool (Clean CaDET) is a platform dedicated to the study of clean code. It presents a conglomerate of AI-powered tools for educators, learners, practitioners, and researchers studying clean code. The repository for the platform with which this plugin interacts can be found <a href="https://github.com/Clean-CaDET/platform" target="_blank">here</a>.
   </p>
-<p align="justify">
-  Clean CaDET started as a project funded by the <a href="http://fondzanauku.gov.rs/?lang=en">Science Fund of the Republic of Serbia</a>. It hopes to grow into an active open-source community dedicated to software engineers' growth and their pursuit to build sustainable, high-quality software.
-</p>
 
 <h2 align="left">Visual Studio Code Plugin</h1>
 
