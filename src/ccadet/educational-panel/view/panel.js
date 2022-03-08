@@ -30,16 +30,13 @@
         hintNum.textContent = createHintNumText(analysisResults.applicableHints.length, analysisResults.challengeCompleted);
 
         hints.innerHTML = createHintContent(analysisResults.applicableHints);
-        solution.innerHTML = "<b>Solution</b>: " + createLearningObjectContent(analysisResults.solution);
+        solution.innerHTML = '<b>Solution</b>: <a href="' + analysisResults.solutionUrl + '">Watch the video!</a>';
 
         function createHintContent(applicableHints) {
             var hintPrint = "<div style='border-bottom: 1px solid gray'>";
             for(var i = 0; i < applicableHints.length; i++) {
                 var hint = applicableHints[i];
                 hintPrint += "<p>" + hint.content + "</p>";
-                if(hint.learningObject) {
-                    hintPrint += createLearningObjectContent(hint.learningObject);
-                }
                 hintPrint += "<p><b>Applicable to</b>:</p>";
                 for(var j = 0; j < hint.applicableToCodeSnippets.length; j++) {
                     hintPrint += "<p>" + hint.applicableToCodeSnippets[j] + "</p>";
@@ -54,21 +51,6 @@
             if(success) return "You can view all the available hints for this completed challenge.";
             if(hintNumber == 1) return "You have 1 hint available.";
             return "You have " + hintNumber + " hints available.";
-        }
-
-        function createLearningObjectContent(learningObject) {
-            if(learningObject.typeDiscriminator === 'text') {
-                return "<p>" + learningObject.content + "</p>";
-            }
-            if(learningObject.typeDiscriminator === 'image') {
-                var image = '<img src="' + learningObject.url + '">';
-                image += '<small>(<a href="' + learningObject.url + '">open image in browser)</a>) ' + learningObject.caption + '</small>';
-                return image;
-            }
-            if(learningObject.typeDiscriminator === 'video') {
-                return '<a href="' + learningObject.url + '">Check out this video for guidance.</a>'
-            }
-            return "";
         }
     });
 }());

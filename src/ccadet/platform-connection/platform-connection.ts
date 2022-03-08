@@ -18,7 +18,7 @@ export class PlatformConnection {
 
     public loginUser(id: string): Promise<Learner> {
 		return new Promise((resolve, reject) => {
-            this.httpTutor.post("learners/login", { studentIndex: id }, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
+            this.httpTutor.post("plugin/login", { studentIndex: id }, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
                 .then(this.mapLearnerDTO)
                 .then(resolve)
                 .catch(reject);
@@ -41,15 +41,15 @@ export class PlatformConnection {
         });
     }
     
-    private sendChallenge(sourceCode: string[], challengeId: number, learnerId: number) {
+    private sendChallenge(sourceCode: string[], assessmentEventId: number, learnerId: number) {
         let request = JSON.stringify({
             sourceCode: sourceCode,
-            challengeId: challengeId,
+            assessmentEventId: assessmentEventId,
             learnerId: learnerId
         });
 
         return new Promise((resolve, reject) => {
-            this.httpTutor.post("submissions/challenge", request, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
+            this.httpTutor.post("plugin/challenge", request, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
                 .then(response => {
                     resolve(response.data);
                 })

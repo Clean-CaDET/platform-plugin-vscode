@@ -43,7 +43,7 @@
 			"properties": {
 				"platform.tutorUrl": {
 					"type": "string",
-					"default": "http://192.168.200.222:8080/smart-tutor/api/",
+					"default": "https://localhost:44333/api/",
 					"description": "Specifies the base URL for the Smart Tutor endpoints."
 				}
 			}

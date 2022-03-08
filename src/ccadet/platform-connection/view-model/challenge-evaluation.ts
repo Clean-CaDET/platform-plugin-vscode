@@ -1,18 +1,15 @@
-import { convert } from "../mappers/learning-object-mapper";
 import { ChallengeHint } from "./challenge-hint";
-import { LearningObject } from "./learning-object";
-
 
 export class ChallengeEvaluation {
     public challengeId: number;
     public challengeCompleted: boolean;
     public applicableHints: ChallengeHint[];
-    public solution: LearningObject;
+    public solutionUrl: string;
 
     constructor(obj?: any) {
-        this.challengeId = obj && obj.challengeId || null;
-        this.challengeCompleted = obj && obj.challengeCompleted;
+        this.challengeId = obj && obj.assessmentEventId || null;
+        this.challengeCompleted = obj && obj.correct;
         this.applicableHints = obj && obj.applicableHints?.map((h: any) => new ChallengeHint(h)) || null;
-        this.solution = obj && obj.solutionLO && convert(obj.solutionLO) || null;
+        this.solutionUrl = obj && obj.solutionUrl || null;
     }
 }

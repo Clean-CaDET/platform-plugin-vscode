@@ -29,7 +29,6 @@ export function getPanelHtml() {
         <button id="show-solution" onclick="showSolution()">Show Solution</button>
     </p>
     <div id="solution-panel" style="display:none">
-        <hr></hr>
         <p>Note that your solution can differ from ours in some aspects.</p>
         <div id="solution"></div>
     </div>
@@ -63,23 +62,20 @@ export function getPanelHtml() {
                 "Your submission is not yet there. Keep going to complete the challenge!";
             if(analysisResults.challengeCompleted) results.style.color = 'green';
             else results.style.color = 'unset';
-
+            
             hintNum.textContent = createHintNumText(analysisResults.applicableHints.length, analysisResults.challengeCompleted);
     
             hints.innerHTML = createHintContent(analysisResults.applicableHints);
-            solution.innerHTML = "<b>Solution</b>: " + createLearningObjectContent(analysisResults.solution);
+            solution.innerHTML = '<b>Solution</b>: <a href="' + analysisResults.solutionUrl + '">Watch the video!</a>';
     
             function createHintContent(applicableHints) {
                 var hintPrint = "<div style='border-bottom: 1px solid gray'>";
                 for(var i = 0; i < applicableHints.length; i++) {
                     var hint = applicableHints[i];
                     hintPrint += "<p>" + hint.content + "</p>";
-                    if(hint.learningObject) {
-                        hintPrint += createLearningObjectContent(hint.learningObject);
-                    }
-                    hintPrint += "<div><b>Applicable to</b>:</div>";
+                    hintPrint += "<p><b>Applicable to</b>:</p>";
                     for(var j = 0; j < hint.applicableToCodeSnippets.length; j++) {
-                        hintPrint += "<div>" + hint.applicableToCodeSnippets[j] + "</div>";
+                        hintPrint += "<p>" + hint.applicableToCodeSnippets[j] + "</p>";
                     }
                     hintPrint += "</div><br><br>";
                 }
@@ -91,21 +87,6 @@ export function getPanelHtml() {
                 if(success) return "You can view all the available hints for this completed challenge.";
                 if(hintNumber == 1) return "You have 1 hint available.";
                 return "You have " + hintNumber + " hints available.";
-            }
-    
-            function createLearningObjectContent(learningObject) {
-                if(learningObject.typeDiscriminator === 'text') {
-                    return "<p>" + learningObject.content + "</p>";
-                }
-                if(learningObject.typeDiscriminator === 'image') {
-                    var image = '<img src="' + learningObject.url + '">';
-                    image += '<small>(<a href="' + learningObject.url + '">open image in browser)</a>) ' + learningObject.caption + '</small>';
-                    return image;
-                }
-                if(learningObject.typeDiscriminator === 'video') {
-                    return '<a href="' + learningObject.url + '">Check out this video for guidance.</a>'
-                }
-                return "";
             }
         });
     </script>
