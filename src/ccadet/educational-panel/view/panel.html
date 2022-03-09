@@ -31,13 +31,20 @@
 
     <script src="{{scriptPath}}"></script>
     <script>
+        const vscode = acquireVsCodeApi();
         function showHints() {
             document.getElementById('hint-panel').style.display = 'block';
             document.getElementById('show-hints').style.display = 'none';
+            vscode.postMessage({
+                command: 'show-hints'
+            });
         }
         function showSolution() {
             document.getElementById('solution-panel').style.display = 'block';
             document.getElementById('show-solution').style.display = 'none';
+            vscode.postMessage({
+                command: 'show-solution'
+            });
         }
     </script>
 </body>

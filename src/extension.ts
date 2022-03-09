@@ -8,7 +8,6 @@ export function activate(context: vscode.ExtensionContext) {
 	console.log('Clean CaDET is now active.');
 
 	let platformConnection: PlatformConnection | null;
-	let learnerId: number | undefined;
 	let learnerIndex: string | undefined;
 
 	let ccadetStart = vscode.commands.registerCommand('clean-cadet.start', () => {
@@ -23,10 +22,9 @@ export function activate(context: vscode.ExtensionContext) {
 				platformConnection = setupConnection();
 				if(platformConnection != null) {
 					platformConnection.loginUser(index)
-					  .then(learner => {
-						  learnerId = learner.id;
+					  .then(() =>
 						  vscode.window.showInformationMessage("Successfully logged in with index: " + learnerIndex)
-					  })
+					  )
 					  .catch(handleLoginError);
 				}
 			})
@@ -34,18 +32,14 @@ export function activate(context: vscode.ExtensionContext) {
 	});
 
 	let ccadetChallenge = vscode.commands.registerCommand('clean-cadet.challenge', (selectedElement) => {
-		if(!learnerId) {
-			vscode.window.showErrorMessage("Student index is required. Enter it through Ctrl+Shift+P > CCaDET Start");
-			return;
-		}
 		if(!platformConnection) {
 			vscode.window.showErrorMessage("Define platform.tutorUrl in settings and run Ctrl+Shift+P > CCaDET Start.");
 			return;
 		}
 		enterChallengeId()
-		    .then(challenge => platformConnection?.getChallengeAnalysis(selectedElement.path, challenge, learnerId || 0)
+		    .then(challenge => platformConnection?.getChallengeAnalysis(selectedElement.path, challenge)
 				.then(response => {
-					EducationalPanel.createOrShow(context.extensionUri);
+					EducationalPanel.createOrShow(context.extensionUri, platformConnection);
 					EducationalPanel.instance?.showChallengeAnalysisResults(response);
 				})
 				.catch(handleSubmissionError))
