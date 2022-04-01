@@ -22,15 +22,21 @@
         challengeId.textContent = analysisResults.challengeId;
 
         results.textContent = analysisResults.challengeCompleted ?
-            "Congratulations! You have completed the challenge." :
-            "Your submission is not yet there. Keep going to complete the challenge!";
-        if(analysisResults.challengeCompleted) results.style.color = 'green';
-        else results.style.color = 'unset';
+            "Čestitam! Uspešno si završio si izazov." :
+            "Tvoja submisija još nije skroz ispravna. Nastavi da radiš kako bi uspešno završio izazov!";
+        if(analysisResults.challengeCompleted) {
+            results.style.color = 'green';
+            hintButton.style.display = 'none';
+        }
+        else {
+            results.style.color = 'unset';
+            hintButton.style.display = 'block';
+        }
         
         hintNum.textContent = createHintNumText(analysisResults.applicableHints.length, analysisResults.challengeCompleted);
 
         hints.innerHTML = createHintContent(analysisResults.applicableHints);
-        solution.innerHTML = '<b>Solution</b>: <a href="' + analysisResults.solutionUrl + '">Watch the video!</a>';
+        solution.innerHTML = '<b>Rešenje</b>: <a href="' + analysisResults.solutionUrl + '">Analiziraj ove materijale.</a>';
 
         function createHintContent(applicableHints) {
             var hintPrint = "<div style='border-bottom: 1px solid gray'>";
@@ -48,9 +54,9 @@
         }
 
         function createHintNumText(hintNumber, success) {
-            if(success) return "You can view all the available hints for this completed challenge.";
-            if(hintNumber == 1) return "You have 1 hint available.";
-            return "You have " + hintNumber + " hints available.";
+            if(success) return "Savladao si izazov. Možeš ispitati naše rešenje da razmotriš gde se razlikujemo. Ne zaboravi da osvežiš tačnost izazova na web prikazu Tutora.";
+            if(hintNumber == 1) return "Imaš 1 hint na raspolaganju.";
+            return "Imaš " + hintNumber + " hintova na raspolaganju.";
         }
     });
 }());

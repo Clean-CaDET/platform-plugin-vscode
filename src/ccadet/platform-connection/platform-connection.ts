@@ -31,8 +31,8 @@ export class PlatformConnection {
 	}
 
     public getChallengeAnalysis(filePath: string, challengeId: number): Promise<ChallengeEvaluation> {
-        if(!this._activeLearnerId) throw "Invalid student ID.";
-        if(!challengeId) throw "Invalid challenge ID.";
+        if(!this._activeLearnerId) throw "Nevalidan ID studenta.";
+        if(!challengeId) throw "Nevalidan ID izazova.";
 
         return new Promise((resolve, reject) => {
             loadCode(filePath)

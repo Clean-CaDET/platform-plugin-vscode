@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Security-Policy" content="default-src self; img-src https://i.ibb.co/ vscode-resource:; script-src vscode-resource: 'self' 'unsafe-inline'; style-src vscode-resource: 'self' 'unsafe-inline';"/>
-    <title>Challenge Analysis Results</title>
+    <title>Rezultati analize tvoje submisije</title>
 </head>
 <body>
     <br><br>
     <h1 id="results"></h1>
-    <p>Challenge id: <span id="challenge-id"></span></p>
+    <p>ID izazova: <span id="challenge-id"></span></p>
     <p>
         <span id="hint-num"></span>
-        <button id="show-hints" onclick="showHints()">Show Hints</button>
+        <button id="show-hints" onclick="showHints()">Prikaži hintove</button>
     </p>
 
     <div id="hint-panel" style="display:none">
@@ -21,10 +21,10 @@
     </div>
 
     <p>
-        <button id="show-solution" onclick="showSolution()">Show Solution</button>
+        <button id="show-solution" onclick="showSolution()">Prikaži rešenje</button>
     </p>
     <div id="solution-panel" style="display:none">
-        <p>Note that your solution can differ from ours in some aspects.</p>
+        <p>Računaj da se tvoje rešenje može razlikovati od našeg u određenim aspektima i dalje biti validno.</p>
         <div id="solution"></div>
     </div>
     <br><br>

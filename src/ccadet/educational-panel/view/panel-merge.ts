@@ -13,10 +13,10 @@ export function getPanelHtml() {
 <body>
     <br><br>
     <h1 id="results"></h1>
-    <p>Challenge id: <span id="challenge-id"></span></p>
+    <p>ID izazova: <span id="challenge-id"></span></p>
     <p>
         <span id="hint-num"></span>
-        <button id="show-hints" onclick="showHints()">Show Hints</button>
+        <button id="show-hints" onclick="showHints()">Prikaži hintove</button>
     </p>
 
     <div id="hint-panel" style="display:none">
@@ -25,11 +25,10 @@ export function getPanelHtml() {
     </div>
 
     <p>
-        <hr></hr>
-        <button id="show-solution" onclick="showSolution()">Show Solution</button>
+        <button id="show-solution" onclick="showSolution()">Prikaži rešenje</button>
     </p>
     <div id="solution-panel" style="display:none">
-        <p>Note that your solution can differ from ours in some aspects.</p>
+        <p>Računaj da se tvoje rešenje može razlikovati od našeg u određenim aspektima i dalje biti validno.</p>
         <div id="solution"></div>
     </div>
     <br><br>
@@ -58,16 +57,22 @@ export function getPanelHtml() {
             challengeId.textContent = analysisResults.challengeId;
     
             results.textContent = analysisResults.challengeCompleted ?
-                "Congratulations! You have completed the challenge." :
-                "Your submission is not yet there. Keep going to complete the challenge!";
-            if(analysisResults.challengeCompleted) results.style.color = 'green';
-            else results.style.color = 'unset';
+            "Čestitam! Uspešno si završio si izazov." :
+            "Tvoja submisija još nije skroz ispravna. Nastavi da radiš kako bi uspešno završio izazov!";
+            if(analysisResults.challengeCompleted) {
+                results.style.color = 'green';
+                hintButton.style.display = 'none';
+            }
+            else {
+                results.style.color = 'unset';
+                hintButton.style.display = 'block';
+            }
             
             hintNum.textContent = createHintNumText(analysisResults.applicableHints.length, analysisResults.challengeCompleted);
-    
+
             hints.innerHTML = createHintContent(analysisResults.applicableHints);
-            solution.innerHTML = '<b>Solution</b>: <a href="' + analysisResults.solutionUrl + '">Watch the video!</a>';
-    
+            solution.innerHTML = '<b>Rešenje</b>: <a href="' + analysisResults.solutionUrl + '">Analiziraj ove materijale.</a>';
+
             function createHintContent(applicableHints) {
                 var hintPrint = "<div style='border-bottom: 1px solid gray'>";
                 for(var i = 0; i < applicableHints.length; i++) {
@@ -79,14 +84,14 @@ export function getPanelHtml() {
                     }
                     hintPrint += "</div><br><br>";
                 }
-    
+
                 return hintPrint;
             }
-    
+
             function createHintNumText(hintNumber, success) {
-                if(success) return "You can view all the available hints for this completed challenge.";
-                if(hintNumber == 1) return "You have 1 hint available.";
-                return "You have " + hintNumber + " hints available.";
+                if(success) return "Savladao si izazov. Možeš ispitati naše rešenje da razmotriš gde se razlikujemo. Ne zaboravi da osvežiš tačnost izazova na web prikazu Tutora.";
+                if(hintNumber == 1) return "Imaš 1 hint na raspolaganju.";
+                return "Imaš " + hintNumber + " hintova na raspolaganju.";
             }
         });
     </script>
