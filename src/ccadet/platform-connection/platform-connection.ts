@@ -43,10 +43,10 @@ export class PlatformConnection {
         });
     }
     
-    private sendChallenge(sourceCode: string[], assessmentEventId: number, _activeLearnerId: number) {
+    private sendChallenge(sourceCode: string[], assessmentItemId: number, _activeLearnerId: number) {
         let request = JSON.stringify({
             sourceCode: sourceCode,
-            assessmentEventId: assessmentEventId,
+            assessmentItemId: assessmentItemId,
             learnerId: _activeLearnerId
         });
 
@@ -68,7 +68,7 @@ export class PlatformConnection {
             this.httpTutor.post(
                 typeOfHelp === 'solution' ? "plugin/challenge/solution" : "plugin/challenge/hints",
                 JSON.stringify({
-                    assessmentEventId: challengeId,
+                    assessmentItemId: challengeId,
                     learnerId: this._activeLearnerId,
                 }), {headers: {'Content-Type': 'application/json; charset=utf-8'}})
             .then(response => {

@@ -7,7 +7,7 @@ export class ChallengeEvaluation {
     public solutionUrl: string;
 
     constructor(obj?: any) {
-        this.challengeId = obj && obj.assessmentEventId || null;
+        this.challengeId = obj && obj.assessmentItemId || null;
         this.challengeCompleted = obj && obj.correct;
         this.applicableHints = obj && obj.applicableHints?.map((h: any) => new ChallengeHint(h)) || null;
         this.solutionUrl = obj && obj.solutionUrl || null;

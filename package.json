@@ -2,7 +2,7 @@
 	"name": "clean-cadet",
 	"displayName": "Clean CaDET",
 	"description": "A plugin that interacts with the challenge system offered by the Smart Tutor module of the Clean CaDET Platform (https://github.com/Clean-CaDET/platform).",
-	"version": "0.0.4",
+	"version": "0.0.5",
 	"publisher": "CleanCaDET",
 	"repository": {
 		"type": "git",
@@ -43,7 +43,7 @@
 			"properties": {
 				"platform.tutorUrl": {
 					"type": "string",
-					"default": "http://79.101.34.218:22088/smart-tutor/api/",
+					"default": "http://clean-cadet.tech/smart-tutor/api/",
 					"description": "Specifies the base URL for the Smart Tutor endpoints."
 				}
 			}
