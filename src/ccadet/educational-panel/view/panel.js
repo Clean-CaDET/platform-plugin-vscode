@@ -22,7 +22,7 @@
         challengeId.textContent = analysisResults.challengeId;
 
         results.textContent = analysisResults.challengeCompleted ?
-            "Čestitam! Uspešno si završio si izazov." :
+            "Čestitam! Uspešno si završio izazov." :
             "Tvoja submisija još nije skroz ispravna. Nastavi da radiš kako bi uspešno završio izazov!";
         if(analysisResults.challengeCompleted) {
             results.style.color = 'green';
