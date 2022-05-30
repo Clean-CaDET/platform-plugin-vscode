@@ -17,9 +17,9 @@ export class PlatformConnection {
         });
     }
 
-    public loginUser(id: string): Promise<Learner> {
+    public loginUser(index: string): Promise<Learner> {
 		return new Promise((resolve, reject) => {
-            this.httpTutor.post("plugin/login", { studentIndex: id }, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
+            this.httpTutor.post("plugin/login", { username: index }, {headers: {'Content-Type': 'application/json; charset=utf-8'}})
                 .then(response => {
                     let learner = new Learner(response.data);
                     this._activeLearnerId = learner.id;
