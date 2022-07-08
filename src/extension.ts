@@ -5,7 +5,7 @@ import { enterChallengeId, enterStudentId } from './ccadet/challenge-input/chall
 
 export function activate(context: vscode.ExtensionContext) {
 	process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0'; //TODO: DANGEROUS AND SHOULD BE REMOVED AFTER TEST RUN
-	console.log('Clean CaDET je aktivan.');
+	console.log('Clean CaDET is active.');
 
 	let platformConnection: PlatformConnection | null;
 	let learnerIndex: string | undefined;
@@ -14,7 +14,7 @@ export function activate(context: vscode.ExtensionContext) {
 		enterStudentId(learnerIndex || "")
 			.then(index => {
 				if(!index) {
-					vscode.window.showErrorMessage("Neophodno je da uneseš indeks. Aktiviraj Ctrl+Shift+P > CCaDET Start");
+					vscode.window.showErrorMessage("You need to enter your username. Activate the prompt through Ctrl+Shift+P > CCaDET Start");
 					return;
 				}
 				learnerIndex = index;
@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
 				if(platformConnection != null) {
 					platformConnection.loginUser(index)
 					  .then(() =>
-						  vscode.window.showInformationMessage("Uspešno si se prijavio sa indeksom: " + learnerIndex)
+						  vscode.window.showInformationMessage("You have successfully logged in with the username: " + learnerIndex)
 					  )
 					  .catch(handleLoginError);
 				}
@@ -33,7 +33,7 @@ export function activate(context: vscode.ExtensionContext) {
 
 	let ccadetChallenge = vscode.commands.registerCommand('clean-cadet.challenge', (selectedElement) => {
 		if(!platformConnection) {
-			vscode.window.showErrorMessage("Definiši platform.tutorUrl u Settings pa aktiviraj Ctrl+Shift+P > CCaDET Start.");
+			vscode.window.showErrorMessage("Define the *platform.tutorUrl* in the Settings to point to your deployed Tutor instance and then activate Ctrl+Shift+P > CCaDET Start.");
 			return;
 		}
 		enterChallengeId()
@@ -56,7 +56,7 @@ function setupConnection() {
 	if (tutorUrl) {
 		return new PlatformConnection(tutorUrl);
 	}
-	vscode.window.showErrorMessage("Definiši platform.tutorUrl u Settings pa aktiviraj Ctrl+Shift+P > CCaDET Start.");
+	vscode.window.showErrorMessage("Define the *platform.tutorUrl* in the Settings to point to your deployed Tutor instance and then activate Ctrl+Shift+P > CCaDET Start.");
 	return null;
 }
 
@@ -65,10 +65,10 @@ export function deactivate() {}
 function handleSubmissionError(error: any): void | PromiseLike<void> {
 	switch(error.response.status) {
 		case 400:
-			vscode.window.showErrorMessage("Loša submisija. Da li si odabraio prikladan file/folder za submisiju? Da li si ispravan ID izazova naveo (pogledaj web prikaz Tutora)?");
+			vscode.window.showErrorMessage("Invalid submission. Did you select the appropriate file/folder? Did you enter the correct challenge ID (shown on the web view)?");
 			break;
 		case 404:
-			vscode.window.showErrorMessage("Izazov nije pronađen. Da li si ispravan ID izazova naveo (pogledaj web prikaz Tutora)?");
+			vscode.window.showErrorMessage("Challenge not found. Did you enter the correct challenge ID (shown on the web view)?");
 			break;
 		default:
 			console.error(error);
@@ -78,7 +78,7 @@ function handleSubmissionError(error: any): void | PromiseLike<void> {
 function handleLoginError(error: any) {
 	switch(error.response.status) {
 		case 404:
-			vscode.window.showErrorMessage("Indeks nije validan. Proveri da si registrovan na platformu i da je indeks ispravan.");
+			vscode.window.showErrorMessage("Username is invalid. Check if you are registered on the platform and that your username is correct.");
 			break;
 		default:
 			console.error(error);

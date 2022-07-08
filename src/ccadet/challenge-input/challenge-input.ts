@@ -2,9 +2,9 @@ import { window } from 'vscode';
 
 export async function enterChallengeId() {
 	const result = await window.showInputBox({
-		placeHolder: 'Unesi ID izazova (ispisan je na web prikazu Tutora)',
+		placeHolder: 'Enter challenge ID (displayed on the Tutor Web UI)',
         validateInput: text => {
-			return text === '' || !Number(text) ? 'ID je obavezno polje tipa celog broja.' : null;
+			return text === '' || !Number(text) ? 'ID is a required number.' : null;
 		}
 	});
 
@@ -13,9 +13,9 @@ export async function enterChallengeId() {
 
 export async function enterStudentId(previousId: string) {
 	const result = await window.showInputBox({
-		placeHolder: 'Unesi svoj indeks u formatu XX-123-2018',
+		placeHolder: 'Enter your username following the format XX-123-2018',
 		validateInput: text => {
-			return !/^([a-zA-Z]{2}-[0-9]{1,3}-[0-9]{4})$/.test(text) ? 'Indeks mora biti u formatu XX-123-2018' : null;
+			return !/^([a-zA-Z]{2}-[0-9]{1,3}-[0-9]{4})$/.test(text) ? 'The username must comply with the format XX-123-2018' : null;
 		},
 		value: previousId
 	});

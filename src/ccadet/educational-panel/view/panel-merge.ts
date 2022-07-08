@@ -13,10 +13,10 @@ export function getPanelHtml() {
 <body>
     <br><br>
     <h1 id="results"></h1>
-    <p>ID izazova: <span id="challenge-id"></span></p>
+    <p>Challenge ID: <span id="challenge-id"></span></p>
     <p>
         <span id="hint-num"></span>
-        <button id="show-hints" onclick="showHints()">Prikaži hintove</button>
+        <button id="show-hints" onclick="showHints()">Show hints</button>
     </p>
 
     <div id="hint-panel" style="display:none">
@@ -25,10 +25,10 @@ export function getPanelHtml() {
     </div>
 
     <p>
-        <button id="show-solution" onclick="showSolution()">Prikaži rešenje</button>
+        <button id="show-solution" onclick="showSolution()">Show solution</button>
     </p>
     <div id="solution-panel" style="display:none">
-        <p>Računaj da se tvoje rešenje može razlikovati od našeg u određenim aspektima i dalje biti validno.</p>
+        <p>Your solution might differ in certain aspects and still be valid.</p>
         <div id="solution"></div>
     </div>
     <br><br>
@@ -57,8 +57,8 @@ export function getPanelHtml() {
             challengeId.textContent = analysisResults.challengeId;
     
             results.textContent = analysisResults.challengeCompleted ?
-            "Čestitam! Uspešno si završio izazov." :
-            "Tvoja submisija još nije skroz ispravna. Nastavi da radiš kako bi uspešno završio izazov!";
+            "Congratulations! You have completed the challenge!" :
+            "Your submission is not completely correct. Keep going!";
             if(analysisResults.challengeCompleted) {
                 results.style.color = 'green';
                 hintButton.style.display = 'none';
@@ -89,9 +89,9 @@ export function getPanelHtml() {
             }
 
             function createHintNumText(hintNumber, success) {
-                if(success) return "Savladao si izazov. Možeš ispitati naše rešenje da razmotriš gde se razlikujemo. Ne zaboravi da osvežiš tačnost izazova na web prikazu Tutora.";
-                if(hintNumber == 1) return "Imaš 1 hint na raspolaganju.";
-                return "Imaš " + hintNumber + " hintova na raspolaganju.";
+                if(success) return "You have completed the challenge. You can view our solution to see where we differ. Don't forget to refresh the challenge correctness on the Tutor Web UI.";
+                if(hintNumber == 1) return "You have 1 available hint.";
+                return "You have " + hintNumber + " available hints.";
             }
         });
     </script>

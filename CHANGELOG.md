@@ -11,3 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Added
 - Initial release for test run of Clean CaDET Tutor and extension.
 - Challenge submission and feedback (hints) basic display.
+
+## [1.0.0] - 2022-07-10
+### Added
+- Challenge submission and feedback (hints) basic display.
